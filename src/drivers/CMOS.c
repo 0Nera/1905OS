@@ -4,9 +4,7 @@
       CMOS модуль для получения времени из BIOS
 */
 
-#define CURRENT_YEAR        2021                           // Текущий год
-#include "../include/tty.h"
-#include "../include/ports.h"
+#include "../include/CMOS.h"
 
 int century_register = 0x00;                                // Set by ACPI table parsing code if possible
 
@@ -130,5 +128,14 @@ void read_rtc() {
 // Get current time
 void getnowtime(){
       read_rtc();
-      tty_printf("Time: %d.%d.%d  %d:%d", month, day, year, hour, minute);
+      term_print("Time: ");
+      term_putint(month);
+      term_putc('.');
+      term_putint(day);
+      term_putc('.');
+      term_putint(year);
+      term_putc(' ');
+      term_putint(hour);
+      term_putc('.');
+      term_putint(minute);
 }
